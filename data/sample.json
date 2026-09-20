@@ -1,0 +1,9 @@
+{
+  "event_id": "092103-020-sample-001",
+  "event_type": "PROMOTION_CAPTURED",
+  "aggregate_type": "service_provider",
+  "aggregate_id": "wellness_service_compliance-001",
+  "occurred_at": "2026-09-20T16:00:00+08:00",
+  "version": 1,
+  "summary": "疗愈服务合规巡查联调样例"
+}
