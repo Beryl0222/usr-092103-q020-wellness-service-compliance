@@ -1,9 +1,19 @@
 {
   "event_id": "092103-020-sample-001",
-  "event_type": "PROMOTION_CAPTURED",
-  "aggregate_type": "service_provider",
-  "aggregate_id": "wellness_service_compliance-001",
+  "event_type": "PROVIDER_REGISTERED",
+  "aggregate_type": "business_entity",
+  "aggregate_id": "be-sample-0001",
   "occurred_at": "2026-09-20T16:00:00+08:00",
   "version": 1,
-  "summary": "疗愈服务合规巡查联调样例"
+  "summary": "疗愈服务合规巡查联调样例：登记一个经营主体",
+  "actor": {
+    "actor_id": "plat-001",
+    "role": "PLATFORM",
+    "display_name": "联合巡查证据平台"
+  },
+  "payload": {
+    "entity_name": "样例疗愈文化传播有限公司",
+    "credit_code": "91330106MA2H8X7K4Q",
+    "registered_region_code": "330100"
+  }
 }

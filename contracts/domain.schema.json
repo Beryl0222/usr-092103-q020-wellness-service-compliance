@@ -1,6 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "疗愈服务合规巡查领域事件",
+  "description": "市场监管与卫生部门联合巡查的跨模块事件契约。系统只按负面清单与规则版本提示风险；医疗属性、虚假宣传及处罚结论只能由有权人员作出。网页、直播、私域宣传须保存可验证时间与来源；投诉人隐私向商户最小披露；跨区域移送须确认接收并保持证据链完整；整改只关闭对应宣传或销售路径；复发关联旧案但必须重新判定。",
   "type": "object",
   "required": [
     "event_id",
@@ -9,7 +10,9 @@
     "aggregate_id",
     "occurred_at",
     "version",
-    "summary"
+    "summary",
+    "actor",
+    "payload"
   ],
   "properties": {
     "event_id": {
@@ -19,19 +22,46 @@
     "event_type": {
       "type": "string",
       "enum": [
+        "PROVIDER_REGISTERED",
+        "ACTUAL_PROVIDER_ONBOARDED",
+        "SERVICE_REGISTERED",
+        "QUALIFICATION_DECLARED",
+        "PROMOTION_VERSION_RECORDED",
         "PROMOTION_CAPTURED",
+        "PACKAGE_REGISTERED",
+        "CONSENT_RECORDED",
         "COMPLAINT_FILED",
+        "EVIDENCE_REQUESTED",
+        "EVIDENCE_SUPPLEMENTED",
+        "COMPLAINT_DELIVERED",
+        "DEFENSE_SUBMITTED",
         "RISK_FLAGGED",
+        "DETERMINATION_MADE",
+        "JURISDICTION_TRANSFERRED",
         "JURISDICTION_ACCEPTED",
-        "ACTION_COMPLETED"
+        "RECTIFICATION_ORDERED",
+        "PATH_CLOSED",
+        "ACTION_COMPLETED",
+        "RECURRENCE_LINKED",
+        "CASE_CLOSED"
       ]
     },
     "aggregate_type": {
       "type": "string",
       "enum": [
+        "business_entity",
         "service_provider",
+        "service_offering",
+        "qualification_declaration",
+        "promotion_version",
         "promotion_capture",
+        "sales_package",
+        "consent_record",
         "complaint_case",
+        "risk_report",
+        "determination",
+        "jurisdiction_transfer",
+        "rectification_order",
         "enforcement_action"
       ]
     },
@@ -45,11 +75,1127 @@
     },
     "version": {
       "type": "integer",
-      "minimum": 1
+      "minimum": 1,
+      "description": "同一 aggregate_id 内严格递增，从 1 开始。"
     },
     "summary": {
       "type": "string",
       "minLength": 1
+    },
+    "actor": {
+      "$ref": "#/$defs/actor"
+    },
+    "payload": {
+      "type": "object"
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "event_type": { "const": "PROVIDER_REGISTERED" },
+        "aggregate_type": { "const": "business_entity" },
+        "payload": { "$ref": "#/$defs/providerRegistered" }
+      }
+    },
+    {
+      "properties": {
+        "event_type": { "const": "ACTUAL_PROVIDER_ONBOARDED" },
+        "aggregate_type": { "const": "service_provider" },
+        "payload": { "$ref": "#/$defs/actualProviderOnboarded" }
+      }
+    },
+    {
+      "properties": {
+        "event_type": { "const": "SERVICE_REGISTERED" },
+        "aggregate_type": { "const": "service_offering" },
+        "payload": { "$ref": "#/$defs/serviceRegistered" }
+      }
+    },
+    {
+      "properties": {
+        "event_type": { "const": "QUALIFICATION_DECLARED" },
+        "aggregate_type": { "const": "qualification_declaration" },
+        "payload": { "$ref": "#/$defs/qualificationDeclared" }
+      }
+    },
+    {
+      "properties": {
+        "event_type": { "const": "PROMOTION_VERSION_RECORDED" },
+        "aggregate_type": { "const": "promotion_version" },
+        "payload": { "$ref": "#/$defs/promotionVersionRecorded" }
+      }
+    },
+    {
+      "properties": {
+        "event_type": { "const": "PROMOTION_CAPTURED" },
+        "aggregate_type": { "const": "promotion_capture" },
+        "payload": { "$ref": "#/$defs/promotionCaptured" }
+      }
+    },
+    {
+      "properties": {
+        "event_type": { "const": "PACKAGE_REGISTERED" },
+        "aggregate_type": { "const": "sales_package" },
+        "payload": { "$ref": "#/$defs/packageRegistered" }
+      }
+    },
+    {
+      "properties": {
+        "event_type": { "const": "CONSENT_RECORDED" },
+        "aggregate_type": { "const": "consent_record" },
+        "payload": { "$ref": "#/$defs/consentRecorded" }
+      }
+    },
+    {
+      "properties": {
+        "event_type": { "const": "COMPLAINT_FILED" },
+        "aggregate_type": { "const": "complaint_case" },
+        "payload": { "$ref": "#/$defs/complaintFiled" }
+      }
+    },
+    {
+      "properties": {
+        "event_type": { "const": "EVIDENCE_REQUESTED" },
+        "aggregate_type": { "const": "complaint_case" },
+        "payload": { "$ref": "#/$defs/evidenceRequested" }
+      }
+    },
+    {
+      "properties": {
+        "event_type": { "const": "EVIDENCE_SUPPLEMENTED" },
+        "aggregate_type": { "const": "complaint_case" },
+        "payload": { "$ref": "#/$defs/evidenceSupplemented" }
+      }
+    },
+    {
+      "properties": {
+        "event_type": { "const": "COMPLAINT_DELIVERED" },
+        "aggregate_type": { "const": "complaint_case" },
+        "payload": { "$ref": "#/$defs/complaintDelivered" }
+      }
+    },
+    {
+      "properties": {
+        "event_type": { "const": "DEFENSE_SUBMITTED" },
+        "aggregate_type": { "const": "complaint_case" },
+        "payload": { "$ref": "#/$defs/defenseSubmitted" }
+      }
+    },
+    {
+      "properties": {
+        "event_type": { "const": "RISK_FLAGGED" },
+        "aggregate_type": { "const": "risk_report" },
+        "payload": { "$ref": "#/$defs/riskFlagged" }
+      }
+    },
+    {
+      "properties": {
+        "event_type": { "const": "DETERMINATION_MADE" },
+        "aggregate_type": { "const": "determination" },
+        "payload": { "$ref": "#/$defs/determinationMade" }
+      }
+    },
+    {
+      "properties": {
+        "event_type": { "const": "JURISDICTION_TRANSFERRED" },
+        "aggregate_type": { "const": "jurisdiction_transfer" },
+        "payload": { "$ref": "#/$defs/jurisdictionTransferred" }
+      }
+    },
+    {
+      "properties": {
+        "event_type": { "const": "JURISDICTION_ACCEPTED" },
+        "aggregate_type": { "const": "jurisdiction_transfer" },
+        "payload": { "$ref": "#/$defs/jurisdictionAccepted" }
+      }
+    },
+    {
+      "properties": {
+        "event_type": { "const": "RECTIFICATION_ORDERED" },
+        "aggregate_type": { "const": "rectification_order" },
+        "payload": { "$ref": "#/$defs/rectificationOrdered" }
+      }
+    },
+    {
+      "properties": {
+        "event_type": { "const": "PATH_CLOSED" },
+        "aggregate_type": { "const": "rectification_order" },
+        "payload": { "$ref": "#/$defs/pathClosed" }
+      }
+    },
+    {
+      "properties": {
+        "event_type": { "const": "ACTION_COMPLETED" },
+        "aggregate_type": { "const": "enforcement_action" },
+        "payload": { "$ref": "#/$defs/actionCompleted" }
+      }
+    },
+    {
+      "properties": {
+        "event_type": { "const": "RECURRENCE_LINKED" },
+        "aggregate_type": { "const": "complaint_case" },
+        "payload": { "$ref": "#/$defs/recurrenceLinked" }
+      }
+    },
+    {
+      "properties": {
+        "event_type": { "const": "CASE_CLOSED" },
+        "aggregate_type": { "const": "complaint_case" },
+        "payload": { "$ref": "#/$defs/caseClosed" }
+      }
+    }
+  ],
+  "$defs": {
+    "actor": {
+      "type": "object",
+      "required": ["actor_id", "role"],
+      "properties": {
+        "actor_id": { "type": "string", "minLength": 1 },
+        "role": {
+          "type": "string",
+          "enum": [
+            "SYSTEM",
+            "MARKET_REGULATOR",
+            "HEALTH_AUTHORITY",
+            "ENFORCEMENT_OFFICER",
+            "MERCHANT",
+            "CONSUMER",
+            "PLATFORM"
+          ]
+        },
+        "jurisdiction": {
+          "type": "string",
+          "description": "监管者所属辖区编码，如 330000（浙江省）。"
+        },
+        "authorization_no": {
+          "type": "string",
+          "description": "执法证件或授权编号；作出医疗属性、虚假宣传判定时必填。"
+        },
+        "display_name": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "evidenceItem": {
+      "type": "object",
+      "required": ["evidence_id", "kind", "content_sha256", "captured_at", "source"],
+      "properties": {
+        "evidence_id": { "type": "string", "minLength": 1 },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "WEBPAGE_SNAPSHOT",
+            "LIVE_RECORDING",
+            "PRIVATE_MESSAGE_SNAPSHOT",
+            "TRANSACTION_RECORD",
+            "CONTRACT_OR_TERMS",
+            "CONSENT_LOG",
+            "QUALIFICATION_DOCUMENT",
+            "OTHER"
+          ]
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "captured_at": { "type": "string", "format": "date-time" },
+        "source": {
+          "type": "object",
+          "required": ["channel", "locator"],
+          "properties": {
+            "channel": { "$ref": "#/$defs/channel" },
+            "locator": {
+              "type": "string",
+              "description": "可验证来源定位：网址、直播间号、私域群号或平台内证据编号。"
+            },
+            "account_id": { "type": "string" },
+            "account_display_name": { "type": "string" },
+            "region_code": {
+              "type": "string",
+              "description": "直播/经营行为发生地行政区划编码，用于跨省管辖判断。"
+            }
+          },
+          "additionalProperties": true
+        },
+        "fixation": {
+          "type": "string",
+          "enum": [
+            "TRUSTED_TIMESTAMP",
+            "NOTARIZATION",
+            "BLOCKCHAIN",
+            "PLATFORM_ARCHIVE",
+            "NONE"
+          ]
+        },
+        "fixation_proof_id": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "WEB_PAGE",
+        "SHORT_VIDEO",
+        "LIVE_STREAM",
+        "PRIVATE_DOMAIN",
+        "PLATFORM_STORE",
+        "OFFLINE",
+        "OTHER"
+      ]
+    },
+    "serviceForm": {
+      "type": "string",
+      "enum": [
+        "AUDIO",
+        "CRYSTAL",
+        "ZEN_RETREAT",
+        "ONLINE_ENERGY_COURSE",
+        "OTHER"
+      ]
+    },
+    "providerRegistered": {
+      "type": "object",
+      "required": ["entity_name", "credit_code", "registered_region_code"],
+      "properties": {
+        "entity_name": { "type": "string", "minLength": 1 },
+        "credit_code": {
+          "type": "string",
+          "pattern": "^[0-9A-Z]{18}$",
+          "description": "统一社会信用代码。"
+        },
+        "registered_region_code": { "type": "string", "minLength": 1 },
+        "contact": { "type": "string" },
+        "related_accounts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["platform", "account_id"],
+            "properties": {
+              "platform": { "type": "string" },
+              "account_id": { "type": "string" },
+              "account_display_name": { "type": "string" }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "actualProviderOnboarded": {
+      "type": "object",
+      "required": ["business_entity_id", "provider_name", "role_in_service"],
+      "properties": {
+        "business_entity_id": { "type": "string", "minLength": 1 },
+        "provider_name": { "type": "string", "minLength": 1 },
+        "role_in_service": {
+          "type": "string",
+          "enum": ["INSTRUCTOR", "STREAMER", "THERAPIST_CLAIMED", "SALES", "OTHER"]
+        },
+        "id_document_hash": { "type": "string" },
+        "accounts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["platform", "account_id"],
+            "properties": {
+              "platform": { "type": "string" },
+              "account_id": { "type": "string" },
+              "account_display_name": { "type": "string" },
+              "region_code": { "type": "string" }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "serviceRegistered": {
+      "type": "object",
+      "required": ["business_entity_id", "service_name", "service_forms"],
+      "properties": {
+        "business_entity_id": { "type": "string", "minLength": 1 },
+        "service_name": { "type": "string", "minLength": 1 },
+        "service_forms": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/serviceForm" }
+        },
+        "actual_provider_ids": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "active_regions": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": true
+    },
+    "qualificationDeclared": {
+      "type": "object",
+      "required": ["business_entity_id", "declaration_type", "medical_claim_made"],
+      "properties": {
+        "business_entity_id": { "type": "string", "minLength": 1 },
+        "service_offering_id": { "type": "string" },
+        "declaration_type": {
+          "type": "string",
+          "enum": [
+            "MEDICAL_INSTITUTION_LICENSE",
+            "MEDICAL_PRACTITIONER_QUALIFICATION",
+            "NON_MEDICAL_TRAINING",
+            "NONE",
+            "OTHER"
+          ]
+        },
+        "medical_claim_made": {
+          "type": "boolean",
+          "description": "宣传/服务中是否声称疾病诊断、治疗等医疗功效；为 true 时须有对应医疗资质证据。"
+        },
+        "credential_summary": { "type": "string" },
+        "evidence": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/evidenceItem" }
+        }
+      },
+      "additionalProperties": true
+    },
+    "promotionVersionRecorded": {
+      "type": "object",
+      "required": [
+        "business_entity_id",
+        "service_offering_id",
+        "promotion_fingerprint",
+        "content_excerpt",
+        "first_seen_channel"
+      ],
+      "properties": {
+        "business_entity_id": { "type": "string" },
+        "service_offering_id": { "type": "string" },
+        "promotion_fingerprint": {
+          "type": "string",
+          "minLength": 8,
+          "description": "宣传文案/话术的稳定指纹，用于识别同一宣传版本跨账号、跨渠道、跨套餐复用。"
+        },
+        "content_excerpt": { "type": "string", "minLength": 1 },
+        "claim_tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "DISEASE_CURE",
+              "MEDICAL_DIAGNOSIS",
+              "ENERGY_HEALING",
+              "GUARANTEED_EFFECT",
+              "DETOX_OR_REBALANCE",
+              "PRICE_DISCOUNT",
+              "OTHER"
+            ]
+          }
+        },
+        "first_seen_channel": { "$ref": "#/$defs/channel" },
+        "supersedes_version_id": {
+          "type": "string",
+          "description": "改版时指向被替换的宣传版本，保留版本链。"
+        }
+      },
+      "additionalProperties": true
+    },
+    "promotionCaptured": {
+      "type": "object",
+      "required": ["promotion_version_id", "evidence", "captured_by_role"],
+      "properties": {
+        "business_entity_id": { "type": "string" },
+        "service_offering_id": { "type": "string" },
+        "sales_package_id": { "type": "string" },
+        "promotion_version_id": { "type": "string", "minLength": 1 },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/evidenceItem" }
+        },
+        "captured_by_role": {
+          "type": "string",
+          "enum": ["REGULATOR", "CONSUMER_SUBMITTED", "PLATFORM", "SYSTEM_CRAWL"]
+        },
+        "linked_case_id": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "packageRegistered": {
+      "type": "object",
+      "required": [
+        "business_entity_id",
+        "service_offering_id",
+        "package_name",
+        "price",
+        "auto_renew"
+      ],
+      "properties": {
+        "business_entity_id": { "type": "string" },
+        "service_offering_id": { "type": "string" },
+        "promotion_version_id": { "type": "string" },
+        "package_name": { "type": "string", "minLength": 1 },
+        "price": {
+          "type": "object",
+          "required": ["amount_fen", "currency"],
+          "properties": {
+            "amount_fen": { "type": "integer", "minimum": 0 },
+            "currency": { "type": "string", "pattern": "^[A-Z]{3}$" }
+          },
+          "additionalProperties": true
+        },
+        "billing_cycle": {
+          "type": "string",
+          "enum": ["ONE_TIME", "MONTHLY", "QUARTERLY", "YEARLY", "PER_SESSION", "OTHER"]
+        },
+        "auto_renew": {
+          "type": "object",
+          "required": ["enabled", "terms_disclosed", "separate_consent_required"],
+          "properties": {
+            "enabled": { "type": "boolean" },
+            "terms_disclosed": {
+              "type": "boolean",
+              "description": "续费条款是否在购买页显著披露。"
+            },
+            "separate_consent_required": {
+              "type": "boolean",
+              "description": "是否要求与购买分开的自动续费单独同意。"
+            },
+            "advance_notice_days": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "扣款前提前提醒天数。"
+            },
+            "consent_record_id": { "type": "string" }
+          },
+          "additionalProperties": true
+        },
+        "sales_paths": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["path_id", "channel"],
+            "properties": {
+              "path_id": { "type": "string" },
+              "channel": { "$ref": "#/$defs/channel" },
+              "locator": { "type": "string" },
+              "account_id": { "type": "string" },
+              "region_code": { "type": "string" }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "consentRecorded": {
+      "type": "object",
+      "required": ["business_entity_id", "consent_scope", "consent_text_hash", "granted_at"],
+      "properties": {
+        "business_entity_id": { "type": "string" },
+        "sales_package_id": { "type": "string" },
+        "consumer_pseudonym": {
+          "type": "string",
+          "description": "消费者侧仅存伪名/编号，真实联系方式在送达商户时脱敏。"
+        },
+        "consent_scope": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": [
+              "PURCHASE_TERMS",
+              "AUTO_RENEWAL",
+              "MARKETING_CONTACT",
+              "DATA_SHARING",
+              "OTHER"
+            ]
+          }
+        },
+        "consent_text_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "granted_at": { "type": "string", "format": "date-time" },
+        "withdrawn_at": { "type": "string", "format": "date-time" },
+        "evidence": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/evidenceItem" }
+        }
+      },
+      "additionalProperties": true
+    },
+    "complaintFiled": {
+      "type": "object",
+      "required": ["business_entity_id", "categories", "complainant_redacted"],
+      "properties": {
+        "business_entity_id": { "type": "string" },
+        "service_offering_id": { "type": "string" },
+        "sales_package_id": { "type": "string" },
+        "categories": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": [
+              "EXAGGERATED_MEDICAL_CLAIM",
+              "FALSE_PROMOTION",
+              "AUTO_RENEWAL_DISPUTE",
+              "CROSS_REGION_LIVE_EVIDENCE",
+              "QUALIFICATION_DISPUTE",
+              "PRICE_DISPUTE",
+              "OTHER"
+            ]
+          }
+        },
+        "promotion_capture_ids": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "promotion_fingerprint": { "type": "string" },
+        "incident_region_codes": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "被诉行为发生地（如直播开播地、收款地），用于判断跨省管辖。"
+        },
+        "complainant_redacted": {
+          "type": "boolean",
+          "description": "登记时是否已按最小披露原则脱敏；必须为 true 才能向商户送达。"
+        },
+        "complainant_contact_encrypted": {
+          "type": "string",
+          "description": "加密存储的联系方式，密钥不对商户开放。"
+        },
+        "claim_summary": { "type": "string" },
+        "evidence": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/evidenceItem" }
+        }
+      },
+      "additionalProperties": true
+    },
+    "evidenceRequested": {
+      "type": "object",
+      "required": ["case_id", "requested_items", "due_at"],
+      "properties": {
+        "case_id": { "type": "string" },
+        "requested_items": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["item", "purpose"],
+            "properties": {
+              "item": { "type": "string" },
+              "purpose": { "type": "string" }
+            },
+            "additionalProperties": true
+          }
+        },
+        "due_at": { "type": "string", "format": "date-time" },
+        "visible_to_consumer": { "type": "boolean" }
+      },
+      "additionalProperties": true
+    },
+    "evidenceSupplemented": {
+      "type": "object",
+      "required": ["case_id", "submitted_by_role", "evidence"],
+      "properties": {
+        "case_id": { "type": "string" },
+        "submitted_by_role": {
+          "type": "string",
+          "enum": ["CONSUMER", "REGULATOR", "PLATFORM", "MERCHANT"]
+        },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/evidenceItem" }
+        }
+      },
+      "additionalProperties": true
+    },
+    "complaintDelivered": {
+      "type": "object",
+      "required": [
+        "case_id",
+        "business_entity_id",
+        "dispute_content",
+        "pii_redacted",
+        "defense_window"
+      ],
+      "properties": {
+        "case_id": { "type": "string" },
+        "business_entity_id": { "type": "string" },
+        "dispute_content": {
+          "type": "object",
+          "required": ["disputed_claims", "related_capture_ids"],
+          "properties": {
+            "disputed_claims": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "type": "string" },
+              "description": "具体争议宣传原文/话术摘录，而非笼统案由。"
+            },
+            "related_capture_ids": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "related_package_id": { "type": "string" },
+            "amount_in_dispute_fen": { "type": "integer", "minimum": 0 }
+          },
+          "additionalProperties": true
+        },
+        "pii_redacted": {
+          "type": "boolean",
+          "description": "送达内容中投诉人姓名、联系方式、地址是否已脱敏；必须为 true。"
+        },
+        "redaction_note": { "type": "string" },
+        "defense_window": {
+          "type": "object",
+          "required": ["opens_at", "closes_at"],
+          "properties": {
+            "opens_at": { "type": "string", "format": "date-time" },
+            "closes_at": { "type": "string", "format": "date-time" }
+          },
+          "additionalProperties": true
+        },
+        "delivered_via": {
+          "type": "string",
+          "enum": ["PLATFORM_INBOX", "REGISTERED_MAIL", "ON_SITE", "OTHER"]
+        }
+      },
+      "additionalProperties": true
+    },
+    "defenseSubmitted": {
+      "type": "object",
+      "required": ["case_id", "submitted_by_entity_id", "statement", "submitted_at"],
+      "properties": {
+        "case_id": { "type": "string" },
+        "submitted_by_entity_id": { "type": "string" },
+        "statement": { "type": "string", "minLength": 1 },
+        "submitted_at": { "type": "string", "format": "date-time" },
+        "within_window": { "type": "boolean" },
+        "evidence": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/evidenceItem" }
+        }
+      },
+      "additionalProperties": true
+    },
+    "riskFlagged": {
+      "type": "object",
+      "required": [
+        "case_id",
+        "rule_set_version",
+        "negative_list_version",
+        "matched_rules",
+        "risk_level",
+        "advisory_only"
+      ],
+      "properties": {
+        "case_id": { "type": "string" },
+        "business_entity_id": { "type": "string" },
+        "promotion_capture_ids": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "promotion_fingerprint": { "type": "string" },
+        "rule_set_version": {
+          "type": "string",
+          "minLength": 1,
+          "description": "规则引擎版本，提示结论可随版本复算。"
+        },
+        "negative_list_version": {
+          "type": "string",
+          "minLength": 1,
+          "description": "负面清单版本号。"
+        },
+        "matched_rules": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["rule_code", "rule_name", "risk_type"],
+            "properties": {
+              "rule_code": { "type": "string" },
+              "rule_name": { "type": "string" },
+              "risk_type": {
+                "type": "string",
+                "enum": [
+                  "MEDICAL_CLAIM_SUSPECTED",
+                  "FALSE_PROMOTION_SUSPECTED",
+                  "AUTO_RENEWAL_CONSENT_WEAK",
+                  "CROSS_JURISDICTION",
+                  "QUALIFICATION_MISSING",
+                  "RECURRENCE_SUSPECTED"
+                ]
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "risk_level": {
+          "type": "string",
+          "enum": ["LOW", "MEDIUM", "HIGH"]
+        },
+        "advisory_only": {
+          "type": "boolean",
+          "enum": [true],
+          "description": "系统提示不构成认定；必须为 true，结论字段禁止出现在本事件。"
+        },
+        "suggested_action": {
+          "type": "string",
+          "description": "建议人工复核方向，不写违法结论或处罚建议。"
+        }
+      },
+      "additionalProperties": false
+    },
+    "determinationMade": {
+      "type": "object",
+      "required": [
+        "case_id",
+        "subject",
+        "conclusion",
+        "basis_evidence_ids",
+        "legal_basis",
+        "re_determination"
+      ],
+      "properties": {
+        "case_id": { "type": "string" },
+        "subject": {
+          "type": "string",
+          "enum": [
+            "MEDICAL_ATTRIBUTE",
+            "FALSE_PROMOTION",
+            "ILLEGAL_MEDICAL_PRACTICE",
+            "AUTO_RENEWAL_COMPLIANCE",
+            "QUALIFICATION_STATUS"
+          ]
+        },
+        "conclusion": {
+          "type": "string",
+          "enum": ["CONFIRMED", "NOT_CONFIRMED", "PARTIALLY_CONFIRMED"]
+        },
+        "reasoning": { "type": "string", "minLength": 1 },
+        "legal_basis": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["law", "provision"],
+            "properties": {
+              "law": { "type": "string" },
+              "provision": { "type": "string" }
+            },
+            "additionalProperties": true
+          }
+        },
+        "basis_risk_report_ids": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "参考的系统风险提示；仅作线索，不作为结论依据本身。"
+        },
+        "basis_evidence_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        },
+        "re_determination": {
+          "type": "boolean",
+          "description": "是否为复发关联后的重新判定；复发案件必须为 true，禁止沿用旧结论。"
+        },
+        "prior_determination_id": {
+          "type": "string",
+          "description": "复发重判时关联的旧判定，仅作历史参考。"
+        }
+      },
+      "additionalProperties": true
+    },
+    "jurisdictionTransferred": {
+      "type": "object",
+      "required": [
+        "case_id",
+        "from_jurisdiction",
+        "to_jurisdiction",
+        "reason",
+        "evidence_chain",
+        "transferred_at"
+      ],
+      "properties": {
+        "case_id": { "type": "string" },
+        "from_jurisdiction": { "type": "string", "minLength": 1 },
+        "to_jurisdiction": { "type": "string", "minLength": 1 },
+        "reason": {
+          "type": "string",
+          "enum": [
+            "LIVE_STREAM_ORIGIN",
+            "BUSINESS_REGISTRATION",
+            "PAYMENT_ACCOUNT_LOCATION",
+            "CONSUMER_LOCATION",
+            "DESIGNATED_JURISDICTION",
+            "OTHER"
+          ]
+        },
+        "reason_detail": { "type": "string" },
+        "evidence_chain": {
+          "type": "array",
+          "minItems": 1,
+          "description": "随案移送的证据清单与哈希；接收方须逐项核对，原证据不脱离原链。",
+          "items": {
+            "type": "object",
+            "required": ["evidence_id", "content_sha256", "origin_capture_id"],
+            "properties": {
+              "evidence_id": { "type": "string" },
+              "content_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "origin_capture_id": { "type": "string" },
+              "fixation": {
+                "type": "string",
+                "enum": [
+                  "TRUSTED_TIMESTAMP",
+                  "NOTARIZATION",
+                  "BLOCKCHAIN",
+                  "PLATFORM_ARCHIVE",
+                  "NONE"
+                ]
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "transferred_at": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": true
+    },
+    "jurisdictionAccepted": {
+      "type": "object",
+      "required": ["transfer_id", "accepted", "chain_verification", "decided_at"],
+      "properties": {
+        "transfer_id": {
+          "type": "string",
+          "description": "对应 JURISDICTION_TRANSFERRED 的 aggregate_id。"
+        },
+        "case_id": { "type": "string" },
+        "accepted": { "type": "boolean" },
+        "chain_verification": {
+          "type": "object",
+          "required": ["items_checked", "items_expected", "all_hashes_match", "original_fixation_preserved"],
+          "properties": {
+            "items_checked": { "type": "integer", "minimum": 0 },
+            "items_expected": { "type": "integer", "minimum": 1 },
+            "all_hashes_match": {
+              "type": "boolean",
+              "description": "逐项哈希是否与移送清单一致；接受时必须为 true。"
+            },
+            "original_fixation_preserved": {
+              "type": "boolean",
+              "description": "原始可信时间戳/公证/区块链固证是否保留。"
+            },
+            "mismatch_items": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          },
+          "additionalProperties": true
+        },
+        "receiver_case_id": { "type": "string" },
+        "rejection_reason": { "type": "string" },
+        "decided_at": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": true
+    },
+    "rectificationOrdered": {
+      "type": "object",
+      "required": ["case_id", "business_entity_id", "scopes", "deadline"],
+      "properties": {
+        "case_id": { "type": "string" },
+        "business_entity_id": { "type": "string" },
+        "determination_ids": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "scopes": {
+          "type": "array",
+          "minItems": 1,
+          "description": "整改范围必须限定到具体宣传版本/取证路径或销售路径，不得停业式扩大。",
+          "items": {
+            "type": "object",
+            "required": ["scope_type", "target_ref", "required_action"],
+            "properties": {
+              "scope_type": {
+                "type": "string",
+                "enum": ["PROMOTION_CHANNEL", "SALES_PATH", "RENEWAL_TERM", "QUALIFICATION_DISPLAY"]
+              },
+              "target_ref": {
+                "type": "string",
+                "description": "promotion_capture_id / sales path_id / package_id 等具体目标。"
+              },
+              "channel": { "$ref": "#/$defs/channel" },
+              "required_action": {
+                "type": "string",
+                "enum": [
+                  "TAKE_DOWN_PROMOTION",
+                  "STOP_LIVE_SESSION",
+                  "DELETE_PRIVATE_SCRIPT",
+                  "CANCEL_AUTO_RENEW",
+                  "REFUND",
+                  "CORRECT_QUALIFICATION_CLAIM",
+                  "OTHER"
+                ]
+              },
+              "note": { "type": "string" }
+            },
+            "additionalProperties": true
+          }
+        },
+        "deadline": { "type": "string", "format": "date-time" },
+        "ordered_at": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": true
+    },
+    "pathClosed": {
+      "type": "object",
+      "required": ["rectification_order_id", "closed_scopes", "closed_at", "verified_evidence"],
+      "properties": {
+        "rectification_order_id": { "type": "string" },
+        "case_id": { "type": "string" },
+        "closed_scopes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["scope_type", "target_ref"],
+            "properties": {
+              "scope_type": {
+                "type": "string",
+                "enum": ["PROMOTION_CHANNEL", "SALES_PATH", "RENEWAL_TERM", "QUALIFICATION_DISPLAY"]
+              },
+              "target_ref": { "type": "string" },
+              "channel": { "$ref": "#/$defs/channel" }
+            },
+            "additionalProperties": true
+          }
+        },
+        "closed_at": { "type": "string", "format": "date-time" },
+        "verified_evidence": {
+          "type": "array",
+          "minItems": 1,
+          "description": "关闭后复核取证，证明对应宣传/销售路径确已关闭。",
+          "items": { "$ref": "#/$defs/evidenceItem" }
+        }
+      },
+      "additionalProperties": true
+    },
+    "actionCompleted": {
+      "type": "object",
+      "required": ["case_id", "business_entity_id", "decision_type", "determination_ids", "decided_at"],
+      "properties": {
+        "case_id": { "type": "string" },
+        "business_entity_id": { "type": "string" },
+        "decision_type": {
+          "type": "string",
+          "enum": [
+            "WARNING",
+            "ORDER_CORRECTION",
+            "FINE",
+            "CONFISCATION",
+            "REFUND_ORDER",
+            "CASE_TRANSFERRED_FOR_PROSECUTION",
+            "NO_PENALTY",
+            "OTHER"
+          ]
+        },
+        "decision_document_no": { "type": "string" },
+        "determination_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        },
+        "linked_rectification_order_id": { "type": "string" },
+        "penalty_detail": { "type": "string" },
+        "amount_fen": { "type": "integer", "minimum": 0 },
+        "effective_at": { "type": "string", "format": "date-time" },
+        "decided_at": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": true
+    },
+    "recurrenceLinked": {
+      "type": "object",
+      "required": [
+        "case_id",
+        "prior_case_ids",
+        "same_promotion_fingerprint",
+        "new_capture_ids",
+        "reuse_old_conclusion",
+        "re_determination_required"
+      ],
+      "properties": {
+        "case_id": { "type": "string" },
+        "business_entity_id": { "type": "string" },
+        "prior_case_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        },
+        "prior_action_ids": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "same_promotion_fingerprint": { "type": "boolean" },
+        "fingerprint": { "type": "string" },
+        "new_capture_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        },
+        "new_accounts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["platform", "account_id"],
+            "properties": {
+              "platform": { "type": "string" },
+              "account_id": { "type": "string" },
+              "account_display_name": { "type": "string" },
+              "region_code": { "type": "string" }
+            },
+            "additionalProperties": true
+          }
+        },
+        "reuse_old_conclusion": {
+          "type": "boolean",
+          "enum": [false],
+          "description": "禁止直接沿用旧案结论；必须为 false。"
+        },
+        "re_determination_required": {
+          "type": "boolean",
+          "enum": [true],
+          "description": "必须基于新证据重新判定。"
+        },
+        "linked_at": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": true
+    },
+    "caseClosed": {
+      "type": "object",
+      "required": ["case_id", "closed_at", "resolution"],
+      "properties": {
+        "case_id": { "type": "string" },
+        "resolution": {
+          "type": "string",
+          "enum": [
+            "PENALTY_ISSUED",
+            "RECTIFIED_NO_PENALTY",
+            "TRANSFERRED",
+            "WITHDRAWN",
+            "INSUFFICIENT_EVIDENCE",
+            "OTHER"
+          ]
+        },
+        "action_id": { "type": "string" },
+        "closed_at": { "type": "string", "format": "date-time" },
+        "consumer_notified": { "type": "boolean" },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": true
     }
   },
   "additionalProperties": true

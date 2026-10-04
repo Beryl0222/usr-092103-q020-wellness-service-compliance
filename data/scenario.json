@@ -1,0 +1,766 @@
+{
+  "scenario": "同一“七天打通脉轮、治愈抑郁”宣传版本在网页、跨省直播和私域社群持续出现，引发夸大医疗功效与自动续费投诉；整改只关闭对应路径，复发换账号后关联旧案但重新判定",
+  "events": [
+    {
+      "event_id": "evt-0001",
+      "event_type": "PROVIDER_REGISTERED",
+      "aggregate_type": "business_entity",
+      "aggregate_id": "be-0001",
+      "occurred_at": "2026-09-01T09:00:00+08:00",
+      "version": 1,
+      "summary": "登记经营主体：样例疗愈文化传播有限公司（浙江杭州）",
+      "actor": { "actor_id": "plat-001", "role": "PLATFORM", "display_name": "联合巡查证据平台" },
+      "payload": {
+        "entity_name": "样例疗愈文化传播有限公司",
+        "credit_code": "91330106MA2H8X7K4Q",
+        "registered_region_code": "330100",
+        "contact": "平台内消息通道",
+        "related_accounts": [
+          { "platform": "短视界", "account_id": "sv-8899", "account_display_name": "脉轮研究所" },
+          { "platform": "带货直播", "account_id": "live-6677", "account_display_name": "林老师能量课" }
+        ]
+      }
+    },
+    {
+      "event_id": "evt-0002",
+      "event_type": "ACTUAL_PROVIDER_ONBOARDED",
+      "aggregate_type": "service_provider",
+      "aggregate_id": "sp-0001",
+      "occurred_at": "2026-09-02T10:00:00+08:00",
+      "version": 1,
+      "summary": "登记实际提供者：主播林某，持两个平台账号",
+      "actor": { "actor_id": "plat-001", "role": "PLATFORM" },
+      "payload": {
+        "business_entity_id": "be-0001",
+        "provider_name": "林某",
+        "role_in_service": "STREAMER",
+        "id_document_hash": "e13b1f5e0c0a7d924692f3b8a0c6d14e7f2a9b5c8d3e6f0a1b4c7d9e2f5a8b0",
+        "accounts": [
+          { "platform": "短视界", "account_id": "sv-8899", "account_display_name": "脉轮研究所", "region_code": "330100" },
+          { "platform": "带货直播", "account_id": "live-6677", "account_display_name": "林老师能量课", "region_code": "532900" }
+        ]
+      }
+    },
+    {
+      "event_id": "evt-0003",
+      "event_type": "SERVICE_REGISTERED",
+      "aggregate_type": "service_offering",
+      "aggregate_id": "so-0001",
+      "occurred_at": "2026-09-02T10:05:00+08:00",
+      "version": 1,
+      "summary": "登记服务：线上能量课程（七日脉轮营）",
+      "actor": { "actor_id": "mch-0001", "role": "MERCHANT" },
+      "payload": {
+        "business_entity_id": "be-0001",
+        "service_name": "七日脉轮能量营",
+        "service_forms": ["ONLINE_ENERGY_COURSE"],
+        "actual_provider_ids": ["sp-0001"],
+        "active_regions": ["330000", "530000", "440000"]
+      }
+    },
+    {
+      "event_id": "evt-0004",
+      "event_type": "QUALIFICATION_DECLARED",
+      "aggregate_type": "qualification_declaration",
+      "aggregate_id": "qd-0001",
+      "occurred_at": "2026-09-02T10:10:00+08:00",
+      "version": 1,
+      "summary": "资质声明：仅有非医疗培训经历，但宣传中声称医疗功效（声明本身不构成认定）",
+      "actor": { "actor_id": "mch-0001", "role": "MERCHANT" },
+      "payload": {
+        "business_entity_id": "be-0001",
+        "service_offering_id": "so-0001",
+        "declaration_type": "NON_MEDICAL_TRAINING",
+        "medical_claim_made": true,
+        "credential_summary": "某培训机构颂钵与水晶疗愈结业证书，非医师资格",
+        "evidence": [
+          {
+            "evidence_id": "ev-qual-0001",
+            "kind": "QUALIFICATION_DOCUMENT",
+            "content_sha256": "50769ca5cd18b9bd3cbc3d14ab99df822c4ca618ddf4d3a515f908a11a1e0844",
+            "captured_at": "2026-09-02T10:08:00+08:00",
+            "source": { "channel": "PLATFORM_STORE", "locator": "platform://merchant/be-0001/qualification/qd-0001" },
+            "fixation": "PLATFORM_ARCHIVE",
+            "fixation_proof_id": "arch-qd-0001"
+          }
+        ]
+      }
+    },
+    {
+      "event_id": "evt-0005",
+      "event_type": "PROMOTION_VERSION_RECORDED",
+      "aggregate_type": "promotion_version",
+      "aggregate_id": "pv-0001",
+      "occurred_at": "2026-08-03T08:00:00+08:00",
+      "version": 1,
+      "summary": "登记宣传版本：七天打通脉轮，治愈抑郁焦虑，无效全额退款",
+      "actor": { "actor_id": "plat-001", "role": "PLATFORM" },
+      "payload": {
+        "business_entity_id": "be-0001",
+        "service_offering_id": "so-0001",
+        "promotion_fingerprint": "fp-chakra-cure-v3-7day-depression",
+        "content_excerpt": "七天打通全部脉轮，深度清理负能量，治愈抑郁、焦虑、失眠，无效全额退款。",
+        "claim_tags": ["DISEASE_CURE", "ENERGY_HEALING", "GUARANTEED_EFFECT"],
+        "first_seen_channel": "WEB_PAGE"
+      }
+    },
+    {
+      "event_id": "evt-0006",
+      "event_type": "PACKAGE_REGISTERED",
+      "aggregate_type": "sales_package",
+      "aggregate_id": "pkg-0001",
+      "occurred_at": "2026-08-03T08:10:00+08:00",
+      "version": 1,
+      "summary": "登记套餐：399 元月卡自动续费，网页、直播、私域三条销售路径",
+      "actor": { "actor_id": "mch-0001", "role": "MERCHANT" },
+      "payload": {
+        "business_entity_id": "be-0001",
+        "service_offering_id": "so-0001",
+        "promotion_version_id": "pv-0001",
+        "package_name": "七日脉轮能量营·月卡",
+        "price": { "amount_fen": 39900, "currency": "CNY" },
+        "billing_cycle": "MONTHLY",
+        "auto_renew": {
+          "enabled": true,
+          "terms_disclosed": false,
+          "separate_consent_required": false,
+          "advance_notice_days": 0
+        },
+        "sales_paths": [
+          { "path_id": "path-web-0001", "channel": "WEB_PAGE", "locator": "https://chakra.example.cn/camp", "account_id": "sv-8899", "region_code": "330100" },
+          { "path_id": "path-live-0001", "channel": "LIVE_STREAM", "locator": "带货直播/直播间6677", "account_id": "live-6677", "region_code": "532900" },
+          { "path_id": "path-private-0001", "channel": "PRIVATE_DOMAIN", "locator": "微信群：脉轮会员7群", "account_id": "wx-mcl-22", "region_code": "330100" }
+        ]
+      }
+    },
+    {
+      "event_id": "evt-0007",
+      "event_type": "CONSENT_RECORDED",
+      "aggregate_type": "consent_record",
+      "aggregate_id": "cr-0001",
+      "occurred_at": "2026-08-05T20:11:00+08:00",
+      "version": 1,
+      "summary": "用户同意记录：8 月 5 日购卡时仅同意购买条款，未单独同意自动续费",
+      "actor": { "actor_id": "consumer-gateway", "role": "CONSUMER" },
+      "payload": {
+        "business_entity_id": "be-0001",
+        "sales_package_id": "pkg-0001",
+        "consumer_pseudonym": "C-7788",
+        "consent_scope": ["PURCHASE_TERMS"],
+        "consent_text_hash": "2f8b4389446ef62d23edb7d41db049b833dd144821306856091694cc821c68fc",
+        "granted_at": "2026-08-05T20:11:00+08:00",
+        "evidence": [
+          {
+            "evidence_id": "ev-consent-0001",
+            "kind": "CONSENT_LOG",
+            "content_sha256": "2f8b4389446ef62d23edb7d41db049b833dd144821306856091694cc821c68fc",
+            "captured_at": "2026-08-05T20:11:00+08:00",
+            "source": { "channel": "PLATFORM_STORE", "locator": "platform://consent/cr-0001" },
+            "fixation": "BLOCKCHAIN",
+            "fixation_proof_id": "bc-772310"
+          }
+        ]
+      }
+    },
+    {
+      "event_id": "evt-0008",
+      "event_type": "PROMOTION_CAPTURED",
+      "aggregate_type": "promotion_capture",
+      "aggregate_id": "pc-web-0001",
+      "occurred_at": "2026-09-10T03:00:00+08:00",
+      "version": 1,
+      "summary": "系统巡检固化网页宣传：同一宣传版本出现在官网落地页",
+      "actor": { "actor_id": "system-crawler", "role": "SYSTEM" },
+      "payload": {
+        "business_entity_id": "be-0001",
+        "service_offering_id": "so-0001",
+        "sales_package_id": "pkg-0001",
+        "promotion_version_id": "pv-0001",
+        "captured_by_role": "SYSTEM_CRAWL",
+        "evidence": [
+          {
+            "evidence_id": "ev-web-0001",
+            "kind": "WEBPAGE_SNAPSHOT",
+            "content_sha256": "5c15cbccebeeeb8c15db67464a4978b856cdc2bb91163837780675e16273e1f6",
+            "captured_at": "2026-09-10T03:00:00+08:00",
+            "source": { "channel": "WEB_PAGE", "locator": "https://chakra.example.cn/camp", "account_id": "sv-8899", "account_display_name": "脉轮研究所", "region_code": "330100" },
+            "fixation": "TRUSTED_TIMESTAMP",
+            "fixation_proof_id": "tsa-20260910-web-771"
+          }
+        ]
+      }
+    },
+    {
+      "event_id": "evt-0009",
+      "event_type": "PROMOTION_CAPTURED",
+      "aggregate_type": "promotion_capture",
+      "aggregate_id": "pc-live-0001",
+      "occurred_at": "2026-09-12T21:40:00+08:00",
+      "version": 1,
+      "summary": "跨省直播取证：开播地云南大理，口播“治愈抑郁，医院都治不好的我能治”",
+      "actor": { "actor_id": "officer-5329-02", "role": "ENFORCEMENT_OFFICER", "jurisdiction": "532900", "authorization_no": "云市监执法证53290041" },
+      "payload": {
+        "business_entity_id": "be-0001",
+        "service_offering_id": "so-0001",
+        "sales_package_id": "pkg-0001",
+        "promotion_version_id": "pv-0001",
+        "captured_by_role": "REGULATOR",
+        "evidence": [
+          {
+            "evidence_id": "ev-live-0001",
+            "kind": "LIVE_RECORDING",
+            "content_sha256": "374f05e923dd8929369c6e850b05aa4e421e31173157249a3177cf81068ac742",
+            "captured_at": "2026-09-12T21:40:00+08:00",
+            "source": { "channel": "LIVE_STREAM", "locator": "带货直播/直播间6677/场次20260912", "account_id": "live-6677", "account_display_name": "林老师能量课", "region_code": "532900" },
+            "fixation": "TRUSTED_TIMESTAMP",
+            "fixation_proof_id": "tsa-20260912-live-309"
+          }
+        ]
+      }
+    },
+    {
+      "event_id": "evt-0010",
+      "event_type": "COMPLAINT_FILED",
+      "aggregate_type": "complaint_case",
+      "aggregate_id": "case-2026-0901",
+      "occurred_at": "2026-09-15T11:00:00+08:00",
+      "version": 1,
+      "summary": "消费者投诉：夸大医疗功效、未经单独同意自动续费 399 元、直播在云南开播",
+      "actor": { "actor_id": "consumer-gateway", "role": "CONSUMER" },
+      "payload": {
+        "business_entity_id": "be-0001",
+        "service_offering_id": "so-0001",
+        "sales_package_id": "pkg-0001",
+        "categories": ["EXAGGERATED_MEDICAL_CLAIM", "AUTO_RENEWAL_DISPUTE", "CROSS_REGION_LIVE_EVIDENCE"],
+        "promotion_capture_ids": ["pc-web-0001", "pc-live-0001"],
+        "promotion_fingerprint": "fp-chakra-cure-v3-7day-depression",
+        "incident_region_codes": ["330100", "532900"],
+        "complainant_redacted": true,
+        "complainant_contact_encrypted": "enc::kms-2026-09::a8f2...（仅办案人员可解密，商户不可见）",
+        "claim_summary": "购买后课程无任何效果却被自动续费扣款；直播声称能治愈抑郁症。",
+        "evidence": [
+          {
+            "evidence_id": "ev-txn-0001",
+            "kind": "TRANSACTION_RECORD",
+            "content_sha256": "b5954d6e68818f7c00348493c66992845938e583ab88045b540052fe476d6e94",
+            "captured_at": "2026-09-15T10:55:00+08:00",
+            "source": { "channel": "PLATFORM_STORE", "locator": "platform://order/C-7788/pkg-0001" },
+            "fixation": "PLATFORM_ARCHIVE",
+            "fixation_proof_id": "arch-order-7788"
+          }
+        ]
+      }
+    },
+    {
+      "event_id": "evt-0011",
+      "event_type": "PROMOTION_CAPTURED",
+      "aggregate_type": "promotion_capture",
+      "aggregate_id": "pc-private-0001",
+      "occurred_at": "2026-09-15T11:20:00+08:00",
+      "version": 1,
+      "summary": "消费者提交私域话术截图：微信群持续发送治愈抑郁话术",
+      "actor": { "actor_id": "consumer-gateway", "role": "CONSUMER" },
+      "payload": {
+        "business_entity_id": "be-0001",
+        "service_offering_id": "so-0001",
+        "sales_package_id": "pkg-0001",
+        "promotion_version_id": "pv-0001",
+        "captured_by_role": "CONSUMER_SUBMITTED",
+        "linked_case_id": "case-2026-0901",
+        "evidence": [
+          {
+            "evidence_id": "ev-private-0001",
+            "kind": "PRIVATE_MESSAGE_SNAPSHOT",
+            "content_sha256": "db217787f2b43ea6b9f4b73c9c61b3200f4b2f84ab10ff125eef81ce6a46806b",
+            "captured_at": "2026-09-09T22:05:00+08:00",
+            "source": { "channel": "PRIVATE_DOMAIN", "locator": "微信群：脉轮会员7群/消息20260909-2205", "account_id": "wx-mcl-22", "region_code": "330100" },
+            "fixation": "NOTARIZATION",
+            "fixation_proof_id": "notary-hz-20260915-118"
+          }
+        ]
+      }
+    },
+    {
+      "event_id": "evt-0012",
+      "event_type": "EVIDENCE_REQUESTED",
+      "aggregate_type": "complaint_case",
+      "aggregate_id": "case-2026-0901",
+      "occurred_at": "2026-09-16T09:30:00+08:00",
+      "version": 2,
+      "summary": "向消费者发出证据补充要求：续费扣款记录与提示短信，期限 5 日（进度页可见）",
+      "actor": { "actor_id": "officer-3301-07", "role": "MARKET_REGULATOR", "jurisdiction": "330100", "authorization_no": "浙市监执法证33010107" },
+      "payload": {
+        "case_id": "case-2026-0901",
+        "requested_items": [
+          { "item": "2026-09-05 自动续费扣款账单截图", "purpose": "核实续费是否实际发生及扣款金额" },
+          { "item": "扣款前 5 日的商家提醒短信或站内信", "purpose": "核实是否履行提前显著提示义务" }
+        ],
+        "due_at": "2026-09-21T18:00:00+08:00",
+        "visible_to_consumer": true
+      }
+    },
+    {
+      "event_id": "evt-0013",
+      "event_type": "EVIDENCE_SUPPLEMENTED",
+      "aggregate_type": "complaint_case",
+      "aggregate_id": "case-2026-0901",
+      "occurred_at": "2026-09-17T14:00:00+08:00",
+      "version": 3,
+      "summary": "消费者补充：银行扣款记录，显示无任何提前提醒",
+      "actor": { "actor_id": "consumer-gateway", "role": "CONSUMER" },
+      "payload": {
+        "case_id": "case-2026-0901",
+        "submitted_by_role": "CONSUMER",
+        "evidence": [
+          {
+            "evidence_id": "ev-renew-0001",
+            "kind": "TRANSACTION_RECORD",
+            "content_sha256": "327d9d5924925b3aabafdad734210a70ca03efa18d9ac487a1f94e99c168f818",
+            "captured_at": "2026-09-05T00:00:00+08:00",
+            "source": { "channel": "OTHER", "locator": "消费者尾号1188银行卡2026年9月账单第2页" },
+            "fixation": "TRUSTED_TIMESTAMP",
+            "fixation_proof_id": "tsa-20260917-bank-052"
+          }
+        ]
+      }
+    },
+    {
+      "event_id": "evt-0014",
+      "event_type": "RISK_FLAGGED",
+      "aggregate_type": "risk_report",
+      "aggregate_id": "rr-0001",
+      "occurred_at": "2026-09-17T14:05:00+08:00",
+      "version": 1,
+      "summary": "系统按负面清单提示高风险：疑似医疗功效宣传、续费同意薄弱、跨省直播；仅作线索",
+      "actor": { "actor_id": "rule-engine", "role": "SYSTEM" },
+      "payload": {
+        "case_id": "case-2026-0901",
+        "business_entity_id": "be-0001",
+        "promotion_capture_ids": ["pc-web-0001", "pc-live-0001", "pc-private-0001"],
+        "promotion_fingerprint": "fp-chakra-cure-v3-7day-depression",
+        "rule_set_version": "RS-2026.08",
+        "negative_list_version": "NL-2026.07",
+        "matched_rules": [
+          { "rule_code": "NL-MED-01", "rule_name": "非医疗服务宣称疾病治疗效果", "risk_type": "MEDICAL_CLAIM_SUSPECTED" },
+          { "rule_code": "RS-CONSENT-12", "rule_name": "自动续费缺少单独同意与提前提示", "risk_type": "AUTO_RENEWAL_CONSENT_WEAK" },
+          { "rule_code": "RS-JURI-03", "rule_name": "直播开播地与登记地不一致", "risk_type": "CROSS_JURISDICTION" }
+        ],
+        "risk_level": "HIGH",
+        "advisory_only": true,
+        "suggested_action": "建议卫生部门研判医疗属性，市场监管部门核查广告与续费条款，并向云南属地核对直播证据。"
+      }
+    },
+    {
+      "event_id": "evt-0015",
+      "event_type": "COMPLAINT_DELIVERED",
+      "aggregate_type": "complaint_case",
+      "aggregate_id": "case-2026-0901",
+      "occurred_at": "2026-09-18T09:00:00+08:00",
+      "version": 4,
+      "summary": "脱敏后向商户送达具体争议内容，开放 4 日申辩窗口",
+      "actor": { "actor_id": "officer-3301-07", "role": "MARKET_REGULATOR", "jurisdiction": "330100", "authorization_no": "浙市监执法证33010107" },
+      "payload": {
+        "case_id": "case-2026-0901",
+        "business_entity_id": "be-0001",
+        "dispute_content": {
+          "disputed_claims": [
+            "“七天打通全部脉轮，深度清理负能量，治愈抑郁、焦虑、失眠，无效全额退款。”（官网落地页）",
+            "“治愈抑郁，医院都治不好的我能治。”（2026-09-12 直播间口播）",
+            "购买页未展示自动续费条款，扣款前未收到任何提醒，2026-09-05 被扣 399 元。"
+          ],
+          "related_capture_ids": ["pc-web-0001", "pc-live-0001", "pc-private-0001"],
+          "related_package_id": "pkg-0001",
+          "amount_in_dispute_fen": 39900
+        },
+        "pii_redacted": true,
+        "redaction_note": "投诉人姓名以编号 C-7788 替代，联系方式与账单账号信息已遮蔽，仅限办案人员按需解密。",
+        "defense_window": { "opens_at": "2026-09-18T09:00:00+08:00", "closes_at": "2026-09-22T18:00:00+08:00" },
+        "delivered_via": "PLATFORM_INBOX"
+      }
+    },
+    {
+      "event_id": "evt-0016",
+      "event_type": "DEFENSE_SUBMITTED",
+      "aggregate_type": "complaint_case",
+      "aggregate_id": "case-2026-0901",
+      "occurred_at": "2026-09-20T16:30:00+08:00",
+      "version": 5,
+      "summary": "商户在申辩期内提交陈述：称能量疗愈属文化体验、“治愈”为情绪化表达",
+      "actor": { "actor_id": "mch-0001", "role": "MERCHANT" },
+      "payload": {
+        "case_id": "case-2026-0901",
+        "submitted_by_entity_id": "be-0001",
+        "statement": "本司提供的是冥想与声音疗愈文化体验，不从事诊疗；“治愈抑郁”为主播个人情绪化表达，非公司统一话术；续费条款位于购买页二级链接。",
+        "submitted_at": "2026-09-20T16:30:00+08:00",
+        "within_window": true,
+        "evidence": [
+          {
+            "evidence_id": "ev-defense-0001",
+            "kind": "CONTRACT_OR_TERMS",
+            "content_sha256": "8ed7d083a07456cad0794d0026f796b2320aa9611e06b59c05bfb33be7d6c36f",
+            "captured_at": "2026-09-20T16:25:00+08:00",
+            "source": { "channel": "WEB_PAGE", "locator": "https://chakra.example.cn/terms/renew-v2" },
+            "fixation": "PLATFORM_ARCHIVE",
+            "fixation_proof_id": "arch-terms-v2"
+          }
+        ]
+      }
+    },
+    {
+      "event_id": "evt-0017",
+      "event_type": "DETERMINATION_MADE",
+      "aggregate_type": "determination",
+      "aggregate_id": "det-0001",
+      "occurred_at": "2026-09-24T10:00:00+08:00",
+      "version": 1,
+      "summary": "市场监管部门人工判定：虚假宣传成立（“治愈抑郁”属医疗用语且无依据，续费条款未显著披露）",
+      "actor": { "actor_id": "officer-3301-07", "role": "MARKET_REGULATOR", "jurisdiction": "330100", "authorization_no": "浙市监执法证33010107" },
+      "payload": {
+        "case_id": "case-2026-0901",
+        "subject": "FALSE_PROMOTION",
+        "conclusion": "CONFIRMED",
+        "reasoning": "网页、直播、私域三处使用同一宣传版本，均含疾病治疗承诺与保证性表述；商户无法提供任何效果依据；续费条款位于二级链接且默认勾选，不构成显著、单独提示。系统风险报告仅作为线索，结论基于网页快照、直播录像、公证书证与扣款记录综合认定。",
+        "legal_basis": [
+          { "law": "中华人民共和国广告法", "provision": "第十七条" },
+          { "law": "中华人民共和国广告法", "provision": "第二十八条第二款第（二）项" },
+          { "law": "消费者权益保护法", "provision": "第二十六条" }
+        ],
+        "basis_risk_report_ids": ["rr-0001"],
+        "basis_evidence_ids": ["ev-web-0001", "ev-live-0001", "ev-private-0001", "ev-renew-0001", "ev-consent-0001"],
+        "re_determination": false
+      }
+    },
+    {
+      "event_id": "evt-0018",
+      "event_type": "DETERMINATION_MADE",
+      "aggregate_type": "determination",
+      "aggregate_id": "det-0002",
+      "occurred_at": "2026-09-24T10:20:00+08:00",
+      "version": 1,
+      "summary": "卫生部门人工判定：服务宣传涉及疾病诊疗功能，具有医疗属性，主体无任何医疗资质",
+      "actor": { "actor_id": "officer-3301-wh-03", "role": "HEALTH_AUTHORITY", "jurisdiction": "330100", "authorization_no": "浙卫监督证33010033" },
+      "payload": {
+        "case_id": "case-2026-0901",
+        "subject": "MEDICAL_ATTRIBUTE",
+        "conclusion": "CONFIRMED",
+        "reasoning": "宣传明确针对抑郁症、焦虑症、失眠等疾病作出诊断、治疗承诺，并以“医院治不好的我能治”诱导患者替代正规就医，已超出一般健康咨询与文化体验边界；资质声明仅为非医疗培训结业证书。",
+        "legal_basis": [
+          { "law": "基本医疗卫生与健康促进法", "provision": "第三十八条" },
+          { "law": "医疗机构管理条例", "provision": "第二十三条" }
+        ],
+        "basis_risk_report_ids": ["rr-0001"],
+        "basis_evidence_ids": ["ev-live-0001", "ev-web-0001", "ev-private-0001", "ev-qual-0001"],
+        "re_determination": false
+      }
+    },
+    {
+      "event_id": "evt-0019",
+      "event_type": "JURISDICTION_TRANSFERRED",
+      "aggregate_type": "jurisdiction_transfer",
+      "aggregate_id": "jt-0001",
+      "occurred_at": "2026-09-25T15:00:00+08:00",
+      "version": 1,
+      "summary": "杭州将直播违法线索移送云南大理（直播开播地），三项固证随案移送、原件留链",
+      "actor": { "actor_id": "officer-3301-07", "role": "MARKET_REGULATOR", "jurisdiction": "330000", "authorization_no": "浙市监执法证33010107" },
+      "payload": {
+        "case_id": "case-2026-0901",
+        "from_jurisdiction": "330000",
+        "to_jurisdiction": "530000",
+        "reason": "LIVE_STREAM_ORIGIN",
+        "reason_detail": "涉事场次直播主播实际开播地为云南省大理市，平台直播推流日志与定位可印证。",
+        "evidence_chain": [
+          { "evidence_id": "ev-web-0001", "content_sha256": "5c15cbccebeeeb8c15db67464a4978b856cdc2bb91163837780675e16273e1f6", "origin_capture_id": "pc-web-0001", "fixation": "TRUSTED_TIMESTAMP" },
+          { "evidence_id": "ev-live-0001", "content_sha256": "374f05e923dd8929369c6e850b05aa4e421e31173157249a3177cf81068ac742", "origin_capture_id": "pc-live-0001", "fixation": "TRUSTED_TIMESTAMP" },
+          { "evidence_id": "ev-private-0001", "content_sha256": "db217787f2b43ea6b9f4b73c9c61b3200f4b2f84ab10ff125eef81ce6a46806b", "origin_capture_id": "pc-private-0001", "fixation": "NOTARIZATION" }
+        ],
+        "transferred_at": "2026-09-25T15:00:00+08:00"
+      }
+    },
+    {
+      "event_id": "evt-0020",
+      "event_type": "JURISDICTION_ACCEPTED",
+      "aggregate_type": "jurisdiction_transfer",
+      "aggregate_id": "jt-0001",
+      "occurred_at": "2026-09-27T10:30:00+08:00",
+      "version": 2,
+      "summary": "大理逐项核对 3/3 项证据哈希一致、原始固证保留，确认接收并立案",
+      "actor": { "actor_id": "officer-5329-02", "role": "ENFORCEMENT_OFFICER", "jurisdiction": "532900", "authorization_no": "云市监执法证53290041" },
+      "payload": {
+        "transfer_id": "jt-0001",
+        "case_id": "case-2026-0901",
+        "accepted": true,
+        "chain_verification": {
+          "items_checked": 3,
+          "items_expected": 3,
+          "all_hashes_match": true,
+          "original_fixation_preserved": true,
+          "mismatch_items": []
+        },
+        "receiver_case_id": "case-dl-2026-0144",
+        "decided_at": "2026-09-27T10:30:00+08:00"
+      }
+    },
+    {
+      "event_id": "evt-0021",
+      "event_type": "RECTIFICATION_ORDERED",
+      "aggregate_type": "rectification_order",
+      "aggregate_id": "ro-0001",
+      "occurred_at": "2026-09-28T09:00:00+08:00",
+      "version": 1,
+      "summary": "责令整改：仅停止涉事直播间、删除私域话术、取消该套餐自动续费，不关闭整店",
+      "actor": { "actor_id": "officer-5329-02", "role": "ENFORCEMENT_OFFICER", "jurisdiction": "532900", "authorization_no": "云市监执法证53290041" },
+      "payload": {
+        "case_id": "case-2026-0901",
+        "business_entity_id": "be-0001",
+        "determination_ids": ["det-0001", "det-0002"],
+        "scopes": [
+          { "scope_type": "PROMOTION_CHANNEL", "target_ref": "pc-live-0001", "channel": "LIVE_STREAM", "required_action": "STOP_LIVE_SESSION", "note": "停止账号 live-6677 的涉事场次及同类口播，不封禁其他正常直播" },
+          { "scope_type": "PROMOTION_CHANNEL", "target_ref": "pc-private-0001", "channel": "PRIVATE_DOMAIN", "required_action": "DELETE_PRIVATE_SCRIPT", "note": "删除会员7群内疾病治疗话术并停发" },
+          { "scope_type": "RENEWAL_TERM", "target_ref": "pkg-0001", "required_action": "CANCEL_AUTO_RENEW", "note": "取消月卡自动续费，对已扣 399 元原路退回" }
+        ],
+        "deadline": "2026-10-02T18:00:00+08:00",
+        "ordered_at": "2026-09-28T09:00:00+08:00"
+      }
+    },
+    {
+      "event_id": "evt-0022",
+      "event_type": "PATH_CLOSED",
+      "aggregate_type": "rectification_order",
+      "aggregate_id": "ro-0001",
+      "occurred_at": "2026-09-30T17:00:00+08:00",
+      "version": 2,
+      "summary": "商户完成对应路径整改并经复核取证：涉事直播回放下架、私域话术删除、续费已取消",
+      "actor": { "actor_id": "mch-0001", "role": "MERCHANT" },
+      "payload": {
+        "rectification_order_id": "ro-0001",
+        "case_id": "case-2026-0901",
+        "closed_scopes": [
+          { "scope_type": "PROMOTION_CHANNEL", "target_ref": "pc-live-0001", "channel": "LIVE_STREAM" },
+          { "scope_type": "PROMOTION_CHANNEL", "target_ref": "pc-private-0001", "channel": "PRIVATE_DOMAIN" },
+          { "scope_type": "RENEWAL_TERM", "target_ref": "pkg-0001" }
+        ],
+        "closed_at": "2026-09-30T17:00:00+08:00",
+        "verified_evidence": [
+          {
+            "evidence_id": "ev-close-0001",
+            "kind": "WEBPAGE_SNAPSHOT",
+            "content_sha256": "76eed3b001153175a31ab40371b21fc18a4be5e1decf1cac7b4a64da462363d5",
+            "captured_at": "2026-09-30T16:40:00+08:00",
+            "source": { "channel": "LIVE_STREAM", "locator": "带货直播/直播间6677/场次20260912（回放页显示已下架）", "account_id": "live-6677", "region_code": "532900" },
+            "fixation": "TRUSTED_TIMESTAMP",
+            "fixation_proof_id": "tsa-20260930-close-901"
+          },
+          {
+            "evidence_id": "ev-close-0002",
+            "kind": "TRANSACTION_RECORD",
+            "content_sha256": "7f63ae19491cea8b37ee37ca8b83543288cb4abb3321e35a5f4edf6040dcb454",
+            "captured_at": "2026-09-30T16:45:00+08:00",
+            "source": { "channel": "PLATFORM_STORE", "locator": "platform://refund/C-7788/pkg-0001（399 元原路退回）" },
+            "fixation": "PLATFORM_ARCHIVE",
+            "fixation_proof_id": "arch-refund-7788"
+          }
+        ]
+      }
+    },
+    {
+      "event_id": "evt-0023",
+      "event_type": "ACTION_COMPLETED",
+      "aggregate_type": "enforcement_action",
+      "aggregate_id": "act-0001",
+      "occurred_at": "2026-10-02T11:00:00+08:00",
+      "version": 1,
+      "summary": "作出警告的行政处罚（首违、已按期按路径整改并退款）",
+      "actor": { "actor_id": "officer-5329-02", "role": "ENFORCEMENT_OFFICER", "jurisdiction": "532900", "authorization_no": "云市监执法证53290041" },
+      "payload": {
+        "case_id": "case-2026-0901",
+        "business_entity_id": "be-0001",
+        "decision_type": "WARNING",
+        "decision_document_no": "大市监罚〔2026〕0144号",
+        "determination_ids": ["det-0001", "det-0002"],
+        "linked_rectification_order_id": "ro-0001",
+        "penalty_detail": "警告；责令停止发布违法宣传、取消自动续费并退还投诉人 399 元。",
+        "amount_fen": 0,
+        "effective_at": "2026-10-02T11:00:00+08:00",
+        "decided_at": "2026-10-02T11:00:00+08:00"
+      }
+    },
+    {
+      "event_id": "evt-0024",
+      "event_type": "CASE_CLOSED",
+      "aggregate_type": "complaint_case",
+      "aggregate_id": "case-2026-0901",
+      "occurred_at": "2026-10-02T15:00:00+08:00",
+      "version": 6,
+      "summary": "案件办结，消费者进度页可查看处罚结果与退款凭证",
+      "actor": { "actor_id": "officer-5329-02", "role": "ENFORCEMENT_OFFICER", "jurisdiction": "532900", "authorization_no": "云市监执法证53290041" },
+      "payload": {
+        "case_id": "case-2026-0901",
+        "resolution": "PENALTY_ISSUED",
+        "action_id": "act-0001",
+        "closed_at": "2026-10-02T15:00:00+08:00",
+        "consumer_notified": true,
+        "note": "三项被诉宣传/销售路径均已关闭，留档监测同一指纹是否复发。"
+      }
+    },
+    {
+      "event_id": "evt-0025",
+      "event_type": "PROMOTION_CAPTURED",
+      "aggregate_type": "promotion_capture",
+      "aggregate_id": "pc-web-0002",
+      "occurred_at": "2026-10-20T02:30:00+08:00",
+      "version": 1,
+      "summary": "复发监测：同一宣传指纹出现在广东新账号“心轮能量工坊”的短视频挂车页",
+      "actor": { "actor_id": "system-crawler", "role": "SYSTEM" },
+      "payload": {
+        "business_entity_id": "be-0001",
+        "service_offering_id": "so-0001",
+        "promotion_version_id": "pv-0001",
+        "captured_by_role": "SYSTEM_CRAWL",
+        "evidence": [
+          {
+            "evidence_id": "ev-web-0002",
+            "kind": "WEBPAGE_SNAPSHOT",
+            "content_sha256": "96ed4b8924d158def7e89e9d4495936d9ae04e09c09437c8453a79160c214368",
+            "captured_at": "2026-10-20T02:30:00+08:00",
+            "source": { "channel": "SHORT_VIDEO", "locator": "短视界/video/7788123021-cart", "account_id": "sv-1024", "account_display_name": "心轮能量工坊", "region_code": "440100" },
+            "fixation": "BLOCKCHAIN",
+            "fixation_proof_id": "bc-901127"
+          }
+        ]
+      }
+    },
+    {
+      "event_id": "evt-0026",
+      "event_type": "COMPLAINT_FILED",
+      "aggregate_type": "complaint_case",
+      "aggregate_id": "case-2026-1007",
+      "occurred_at": "2026-10-21T09:10:00+08:00",
+      "version": 1,
+      "summary": "新投诉：同一主体换广东新账号继续销售，宣传文案与旧案指纹一致",
+      "actor": { "actor_id": "consumer-gateway", "role": "CONSUMER" },
+      "payload": {
+        "business_entity_id": "be-0001",
+        "service_offering_id": "so-0001",
+        "categories": ["EXAGGERATED_MEDICAL_CLAIM", "FALSE_PROMOTION"],
+        "promotion_capture_ids": ["pc-web-0002"],
+        "promotion_fingerprint": "fp-chakra-cure-v3-7day-depression",
+        "incident_region_codes": ["440100"],
+        "complainant_redacted": true,
+        "complainant_contact_encrypted": "enc::kms-2026-10::51cc...（仅办案人员可解密，商户不可见）",
+        "claim_summary": "新账号仍在售卖同一课程，文案一字不差。"
+      }
+    },
+    {
+      "event_id": "evt-0027",
+      "event_type": "RISK_FLAGGED",
+      "aggregate_type": "risk_report",
+      "aggregate_id": "rr-0002",
+      "occurred_at": "2026-10-21T09:12:00+08:00",
+      "version": 1,
+      "summary": "系统提示：指纹命中旧案，疑似处罚后复发（仅线索，不直接沿用旧结论）",
+      "actor": { "actor_id": "rule-engine", "role": "SYSTEM" },
+      "payload": {
+        "case_id": "case-2026-1007",
+        "business_entity_id": "be-0001",
+        "promotion_capture_ids": ["pc-web-0002"],
+        "promotion_fingerprint": "fp-chakra-cure-v3-7day-depression",
+        "rule_set_version": "RS-2026.08",
+        "negative_list_version": "NL-2026.07",
+        "matched_rules": [
+          { "rule_code": "RS-RECUR-01", "rule_name": "同一宣传指纹在处罚后再次出现", "risk_type": "RECURRENCE_SUSPECTED" },
+          { "rule_code": "NL-MED-01", "rule_name": "非医疗服务宣称疾病治疗效果", "risk_type": "MEDICAL_CLAIM_SUSPECTED" }
+        ],
+        "risk_level": "HIGH",
+        "advisory_only": true,
+        "suggested_action": "建议关联旧案 case-2026-0901 调阅历史，但须依据新账号、新取证重新调查判定。"
+      }
+    },
+    {
+      "event_id": "evt-0028",
+      "event_type": "RECURRENCE_LINKED",
+      "aggregate_type": "complaint_case",
+      "aggregate_id": "case-2026-1007",
+      "occurred_at": "2026-10-22T10:00:00+08:00",
+      "version": 2,
+      "summary": "立案时关联旧案与旧处罚：同指纹、新账号新地区，标记必须重新判定",
+      "actor": { "actor_id": "officer-4401-11", "role": "MARKET_REGULATOR", "jurisdiction": "440100", "authorization_no": "粤市监执法证44010111" },
+      "payload": {
+        "case_id": "case-2026-1007",
+        "business_entity_id": "be-0001",
+        "prior_case_ids": ["case-2026-0901"],
+        "prior_action_ids": ["act-0001"],
+        "same_promotion_fingerprint": true,
+        "fingerprint": "fp-chakra-cure-v3-7day-depression",
+        "new_capture_ids": ["pc-web-0002"],
+        "new_accounts": [
+          { "platform": "短视界", "account_id": "sv-1024", "account_display_name": "心轮能量工坊", "region_code": "440100" }
+        ],
+        "reuse_old_conclusion": false,
+        "re_determination_required": true,
+        "linked_at": "2026-10-22T10:00:00+08:00"
+      }
+    },
+    {
+      "event_id": "evt-0029",
+      "event_type": "DETERMINATION_MADE",
+      "aggregate_type": "determination",
+      "aggregate_id": "det-0003",
+      "occurred_at": "2026-10-24T15:00:00+08:00",
+      "version": 1,
+      "summary": "基于新证据重新判定：虚假宣传再次成立；旧判定仅作历史与量罚参考",
+      "actor": { "actor_id": "officer-4401-11", "role": "MARKET_REGULATOR", "jurisdiction": "440100", "authorization_no": "粤市监执法证44010111" },
+      "payload": {
+        "case_id": "case-2026-1007",
+        "subject": "FALSE_PROMOTION",
+        "conclusion": "CONFIRMED",
+        "reasoning": "新账号挂车页经独立取证，文案与旧案宣传版本指纹一致，疾病治疗承诺与保证性用语再次出现；主体在已受警告、已完成整改后变换账号继续发布，主观过错明显。本次结论仅以新取证 ev-web-0002 为直接依据，旧案 det-0001 仅用于认定屡查屡犯情节。",
+        "legal_basis": [
+          { "law": "中华人民共和国广告法", "provision": "第二十八条第二款第（二）项" },
+          { "law": "中华人民共和国广告法", "provision": "第五十五条" }
+        ],
+        "basis_risk_report_ids": ["rr-0002"],
+        "basis_evidence_ids": ["ev-web-0002"],
+        "re_determination": true,
+        "prior_determination_id": "det-0001"
+      }
+    },
+    {
+      "event_id": "evt-0030",
+      "event_type": "ACTION_COMPLETED",
+      "aggregate_type": "enforcement_action",
+      "aggregate_id": "act-0002",
+      "occurred_at": "2026-10-25T11:00:00+08:00",
+      "version": 1,
+      "summary": "复发再犯，依法罚款并责令下架新账号挂车页",
+      "actor": { "actor_id": "officer-4401-11", "role": "MARKET_REGULATOR", "jurisdiction": "440100", "authorization_no": "粤市监执法证44010111" },
+      "payload": {
+        "case_id": "case-2026-1007",
+        "business_entity_id": "be-0001",
+        "decision_type": "FINE",
+        "decision_document_no": "穗市监罚〔2026〕1007号",
+        "determination_ids": ["det-0003"],
+        "penalty_detail": "罚款人民币 20000 元；责令立即下架新账号挂车页违法宣传。",
+        "amount_fen": 2000000,
+        "effective_at": "2026-10-25T11:00:00+08:00",
+        "decided_at": "2026-10-25T11:00:00+08:00"
+      }
+    },
+    {
+      "event_id": "evt-0031",
+      "event_type": "CASE_CLOSED",
+      "aggregate_type": "complaint_case",
+      "aggregate_id": "case-2026-1007",
+      "occurred_at": "2026-10-26T09:00:00+08:00",
+      "version": 3,
+      "summary": "复发案件办结，持续监测同指纹在其余账号与地区的出现",
+      "actor": { "actor_id": "officer-4401-11", "role": "MARKET_REGULATOR", "jurisdiction": "440100", "authorization_no": "粤市监执法证44010111" },
+      "payload": {
+        "case_id": "case-2026-1007",
+        "resolution": "PENALTY_ISSUED",
+        "action_id": "act-0002",
+        "closed_at": "2026-10-26T09:00:00+08:00",
+        "consumer_notified": true
+      }
+    }
+  ]
+}
